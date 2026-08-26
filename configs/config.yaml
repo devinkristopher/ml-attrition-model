@@ -1,0 +1,50 @@
+project:
+  name: ml-attrition-model
+  random_seed: 42
+
+data:
+  raw_path: data/raw/employee_attrition.csv
+  target_column: Attrition
+  test_size: 0.20
+  
+  drop_columns:
+    - EmployeeNumber
+    - EmployeeCount
+    - Over18
+    - StandardHours
+
+missing_values:
+  simulate: true
+  fraction: 0.05
+  columns:
+    - MonthlyIncome
+    - DistanceFromHome
+    - JobRole
+    - BusinessTravel
+
+model:
+  type: logistic_regression
+  parameters:
+    C: 1.0
+    max_iter: 1000
+    class_weight: balanced
+    solver: liblinear
+
+evaluation:
+  primary_metric: roc_auc
+  minimum_thresholds:
+    roc_auc: 0.65
+    f1: 0.35
+    recall: 0.50
+
+mlflow:
+  experiment_name: employee-attrition
+  tracking_uri: mlruns
+
+artifacts:
+  model_path: models/employee_attrition.joblib
+  reports_directory: reports
+
+monitoring:
+  drift_share_threshold: 0.30
+  report_path: reports/drift_report.html
