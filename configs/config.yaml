@@ -52,11 +52,3 @@ mlflow:
   tracking_uri: mlruns
   experiment_name: employee-attrition
   data_version: ibm-attrition-v1
-
-model:
-  type: logistic_regression
-  parameters:
-    C: 1.0
-    max_iter: 1000
-    class_weight: balanced
-    solver: liblinear
