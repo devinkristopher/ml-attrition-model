@@ -5,12 +5,18 @@ import json
 import sys
 from pathlib import Path
 from typing import Any
+import os
+
+os.environ.setdefault("MLFLOW_ALLOW_FILE_STORE", "true")
 
 import joblib
 import pandas as pd
 import yaml
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
+import mlflow
+import mlflow.sklearn
+from mlflow.models import infer_signature
 
 from .evaluate import calculate_metrics, thresholds_passed
 from .preprocess import (
@@ -77,6 +83,8 @@ def train_model(
 ) -> tuple[dict[str, float | int], dict[str, float]]:
     """Run the complete training workflow."""
     config = load_config(config_path)
+    mlflow.set_tracking_uri(config["mlflow"]["tracking_uri"])
+    mlflow.set_experiment(config["mlflow"]["experiment_name"])
     seed = config["project"]["random_seed"]
     target = config["data"]["target_column"]
 
@@ -144,31 +152,74 @@ def train_model(
         expected_columns=encoded_columns,
     )
 
-    model = build_model(
-    parameters=config["model"]["parameters"],
-    random_state=seed,
-    )
-    print("Training logistic regression...")
-    model.fit(X_train, y_train)
+    model_parameters = config["model"]["parameters"]
 
-    predictions = model.predict(X_test)
-    probabilities = model.predict_proba(X_test)[:, 1]
-    metrics: dict[str, float | int] = calculate_metrics(
-        y_true=y_test,
-        y_pred=predictions,
-        y_probability=probabilities,
-    )
-    metrics.update(
-        {
-            "train_size": len(X_train),
-            "test_size": len(X_test),
-            "input_features": len(encoded_columns),
-        }
-    )
+    with mlflow.start_run() as run:
+        mlflow.log_param("model_type", config["model"]["type"])
+        mlflow.log_param("random_seed", seed)
+        mlflow.log_param("test_size", config["data"]["test_size"])
+        mlflow.log_param(
+            "missing_value_fraction",
+            config["missing_values"]["fraction"],
+        )
+        mlflow.log_param(
+            "data_version",
+            config["mlflow"]["data_version"],
+        )
+        mlflow.log_params(model_parameters)
+
+        model = build_model(
+            parameters=model_parameters,
+            random_state=seed,
+        )
+
+        print("Training logistic regression...")
+        model.fit(X_train, y_train)
+
+        predictions = model.predict(X_test)
+        probabilities = model.predict_proba(X_test)[:, 1]
+
+        metrics: dict[str, float | int] = calculate_metrics(
+            y_true=y_test,
+            y_pred=predictions,
+            y_probability=probabilities,
+        )
+
+        metrics.update(
+            {
+                "train_size": len(X_train),
+                "test_size": len(X_test),
+                "input_features": len(encoded_columns),
+            }
+        )
+
+        mlflow.log_metrics(
+            {
+                metric_name: float(metric_value)
+                for metric_name, metric_value in metrics.items()
+            }
+        )
+
+        signature = infer_signature(
+            X_train,
+            model.predict(X_train),
+        )
+
+        mlflow.sklearn.log_model(
+            sk_model=model,
+            name="model",
+            signature=signature,
+            input_example=X_train.head(5),
+        )
+
+        print(f"MLflow run ID: {run.info.run_id}")
 
     print("\nResults")
     for name, value in metrics.items():
-        print(f"  {name}: {value:.4f}" if isinstance(value, float) else f"  {name}: {value}")
+        if isinstance(value, float):
+            print(f"  {name}: {value:.4f}")
+        else:
+            print(f"  {name}: {value}")
 
     artifact = {
         "model": model,
@@ -179,6 +230,7 @@ def train_model(
         "encoded_columns": encoded_columns,
         "target_column": target,
     }
+
     save_artifacts(artifact, metrics, config)
 
     return metrics, config["evaluation"]["minimum_thresholds"]

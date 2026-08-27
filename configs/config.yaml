@@ -6,7 +6,7 @@ data:
   raw_path: data/raw/employee_attrition.csv
   target_column: Attrition
   test_size: 0.20
-  
+
   drop_columns:
     - EmployeeNumber
     - EmployeeCount
@@ -25,7 +25,7 @@ missing_values:
 model:
   type: logistic_regression
   parameters:
-    C: 1.0
+    C: 10.0
     max_iter: 1000
     class_weight: balanced
     solver: liblinear
@@ -37,10 +37,6 @@ evaluation:
     f1: 0.35
     recall: 0.50
 
-mlflow:
-  experiment_name: employee-attrition
-  tracking_uri: mlruns
-
 artifacts:
   model_path: models/employee_attrition.joblib
   reports_directory: reports
@@ -48,3 +44,16 @@ artifacts:
 monitoring:
   drift_share_threshold: 0.30
   report_path: reports/drift_report.html
+
+mlflow:
+  tracking_uri: mlruns
+  experiment_name: employee-attrition
+  data_version: ibm-attrition-v1
+
+model:
+  type: logistic_regression
+  parameters:
+    C: 1.0
+    max_iter: 1000
+    class_weight: balanced
+    solver: liblinear
