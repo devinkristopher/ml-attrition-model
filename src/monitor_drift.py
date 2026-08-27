@@ -233,13 +233,13 @@ def get_drift_summary(
         exist_ok=True,
     )
 
-    if not (report_path.exists()):
-        raise FileNotFoundError(
-            f"Error: Report was not created at location {report_path}. Create the report before generating HTML snapshot please."
-    )
-
     # type-cast string or it won't work!
     snapshot.save_html(str(report_path))
+
+    if not report_path.exists():
+        raise FileNotFoundError(
+            f"Report was not created at {report_path}"
+        )
 
     result = snapshot.dict()
 
