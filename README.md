@@ -219,6 +219,26 @@ Outputs are saved to:
 
 The script exits with status `1` when dataset drift exceeds the configured limit. Because this demonstration deliberately creates strong production drift, that nonzero status is the expected monitoring alert.
 
+## Drift Analysis
+
+The simulated production data produced drift in 7 of 30 features, or 23.3%:
+
+| Feature | Type | PSI |
+|---|---|---:|
+| DistanceFromHome | Numeric | 3.3181 |
+| HourlyRate | Numeric | 2.7850 |
+| DailyRate | Numeric | 2.0183 |
+| Age | Numeric | 1.1076 |
+| OverTime | Categorical | 0.9288 |
+| MonthlyIncome | Numeric | 0.7704 |
+| BusinessTravel | Categorical | 0.7215 |
+
+These changes were deliberately simulated (by injection) by way of `introduce_drift()` for this demo. In a real production environment, similar shifts could reflect changing housing and commuting conditions, compensation practices, workforce demographics, workload, or travel requirements. Nevertheless, they will be evaluated in relation to the project's business purpose -- HR attrition management. 
+
+A screenshot of the Evidently drift detection dashboard showing the empirical redistribution of each drifted feature can be seen below:
+
+<img width="1176" height="633" alt="image" src="https://github.com/user-attachments/assets/79611161-0d5e-4595-9b05-0412b4ce5d60" />
+
 
 `DistanceFromHome` demonstrated the greatest drift. Its distribution shifted toward greater commuting distances, indicating that employees generally lived farther from the office in the simulated current dataset. Although all values remained within the 100-mile input-validation threshold, the change represents a meaningful workforce-level trend because proximity to the office may influence retention. The reference data included moderately long commutes, but the upper portion of the current range was previously unrepresented or sparsely represented. A substantial or rapidly emerging shift of this kind could reflect external factors such as housing costs, broader economic conditions, or migration patterns. It should therefore prompt HR awareness and further investigation, though it does not by itself indicate an immediate increase in attrition. For example, if considerably fewer employees now live near the office, expanded hybrid or remote-work policies could help mitigate commute-related attrition risk.
 
