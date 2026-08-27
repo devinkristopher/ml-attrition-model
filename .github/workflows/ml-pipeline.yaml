@@ -36,13 +36,13 @@ jobs:
         run: bash scripts/download_data.sh
 
       - name: Run preprocessing unit tests
-        run: pytest tests/test_preprocess.py -v --tb=short
-
+        run: python -m pytest tests/test_preprocess.py -v --tb=short
+        
       - name: Run data validation tests
-        run: pytest tests/test_data.py -v --tb=short
-
+        run: python -m pytest tests/test_data.py -v --tb=short
+  
       - name: Run model validation tests
-        run: pytest tests/test_model.py -v --tb=short
+        run: python -m pytest tests/test_model.py -v --tb=short
 
   train:
     name: Train and Evaluate
