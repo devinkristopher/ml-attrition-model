@@ -40,10 +40,13 @@ evaluation:
 artifacts:
   model_path: models/employee_attrition.joblib
   reports_directory: reports
-
+  
 monitoring:
-  drift_share_threshold: 0.30
   report_path: reports/drift_report.html
+  reference_fraction: 0.60
+  feature_drift_threshold: 0.20
+  drift_share_threshold: 0.20
+  results_path: reports/drift_check_result.json
 
 mlflow:
   tracking_uri: mlruns

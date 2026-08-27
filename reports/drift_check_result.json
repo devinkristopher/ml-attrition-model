@@ -1,0 +1,198 @@
+{
+  "total_features": 30,
+  "drifted_features": 7,
+  "drift_share": 0.233,
+  "drift_share_threshold": 0.2,
+  "dataset_drift": true,
+  "drifted_feature_names": [
+    "Age",
+    "DailyRate",
+    "DistanceFromHome",
+    "HourlyRate",
+    "MonthlyIncome",
+    "BusinessTravel",
+    "OverTime"
+  ],
+  "features": {
+    "Age": {
+      "drifted": true,
+      "drift_score": 1.1076,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "DailyRate": {
+      "drifted": true,
+      "drift_score": 2.0183,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "DistanceFromHome": {
+      "drifted": true,
+      "drift_score": 3.3181,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "HourlyRate": {
+      "drifted": true,
+      "drift_score": 2.785,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "MonthlyIncome": {
+      "drifted": true,
+      "drift_score": 0.7704,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "MonthlyRate": {
+      "drifted": false,
+      "drift_score": 0.0194,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "PercentSalaryHike": {
+      "drifted": false,
+      "drift_score": 0.0522,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "TotalWorkingYears": {
+      "drifted": false,
+      "drift_score": 0.0709,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "YearsAtCompany": {
+      "drifted": false,
+      "drift_score": 0.0523,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "YearsInCurrentRole": {
+      "drifted": false,
+      "drift_score": 0.0568,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "YearsSinceLastPromotion": {
+      "drifted": false,
+      "drift_score": 0.0592,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "YearsWithCurrManager": {
+      "drifted": false,
+      "drift_score": 0.078,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "BusinessTravel": {
+      "drifted": true,
+      "drift_score": 0.7215,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "Department": {
+      "drifted": false,
+      "drift_score": 0.0027,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "Education": {
+      "drifted": false,
+      "drift_score": 0.014,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "EducationField": {
+      "drifted": false,
+      "drift_score": 0.0281,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "EnvironmentSatisfaction": {
+      "drifted": false,
+      "drift_score": 0.0022,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "Gender": {
+      "drifted": false,
+      "drift_score": 0.0006,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "JobInvolvement": {
+      "drifted": false,
+      "drift_score": 0.0125,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "JobLevel": {
+      "drifted": false,
+      "drift_score": 0.0594,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "JobRole": {
+      "drifted": false,
+      "drift_score": 0.0468,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "JobSatisfaction": {
+      "drifted": false,
+      "drift_score": 0.0285,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "MaritalStatus": {
+      "drifted": false,
+      "drift_score": 0.0025,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "NumCompaniesWorked": {
+      "drifted": false,
+      "drift_score": 0.0395,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "OverTime": {
+      "drifted": true,
+      "drift_score": 0.9288,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "PerformanceRating": {
+      "drifted": false,
+      "drift_score": 0.0012,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "RelationshipSatisfaction": {
+      "drifted": false,
+      "drift_score": 0.0136,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "StockOptionLevel": {
+      "drifted": false,
+      "drift_score": 0.0057,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "TrainingTimesLastYear": {
+      "drifted": false,
+      "drift_score": 0.0063,
+      "threshold": 0.2,
+      "method": "psi"
+    },
+    "WorkLifeBalance": {
+      "drifted": false,
+      "drift_score": 0.0045,
+      "threshold": 0.2,
+      "method": "psi"
+    }
+  }
+}

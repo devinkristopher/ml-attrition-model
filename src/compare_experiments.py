@@ -1,11 +1,6 @@
-"""Compare employee attrition experiments tracked by MLflow."""
-
 import os
-
 os.environ.setdefault("MLFLOW_ALLOW_FILE_STORE", "true")
-
 import mlflow
-
 
 # Connect to the same local tracking store used by train.py
 mlflow.set_tracking_uri("file:./mlruns")
