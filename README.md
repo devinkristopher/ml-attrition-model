@@ -87,7 +87,7 @@ dvc pull
 
 The configured DVC remote is a local filesystem remote named `storage`. On the original development machine it resolves to `../ml-attrition-dvc-storage` relative to the repository's parent directory.
 
-If that local DVC storage directory is unavailable, the included retrieval script downloads the public Kaggle dataset without requiring Kaggle CLI authentication:
+**If that local DVC storage directory is unavailable, the included retrieval script downloads the public Kaggle dataset without requiring Kaggle CLI authentication**:
 
 ```bash
 bash scripts/download_data.sh
